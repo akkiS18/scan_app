@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<title>Code128 Scanner</title>
+	</head>
+	<body>
+		<h1>Code128 Scanner</h1>
+		<div id="scanner"></div>
+		<p id="result"></p>
+
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/quagga/0.12.1/quagga.min.js"></script>
+		<script>
+			// QuaggaJS konfiguratsiyasi
+			Quagga.init(
+				{
+					inputStream: {
+						type: "LiveStream",
+						target: document.querySelector("#scanner"),
+						constraints: {
+							width: 640,
+							height: 480,
+							facingMode: "environment",
+						},
+					},
+					decoder: {
+						readers: ["code_128_reader"], // Code128 o'qish
+					},
+				},
+				function (err) {
+					if (err) {
+						console.error(err);
+						return;
+					}
+					Quagga.start();
+				}
+			);
+
+			// Barkod o'qilganda natijani olish
+			Quagga.onDetected(function (data) {
+				document.getElementById(
+					"result"
+				).innerText = `Barkod: ${data.codeResult.code}`;
+				Quagga.stop(); // O'qish tugashi bilan skanerlashni to'xtatish
+			});
+		</script>
+	</body>
+</html>
