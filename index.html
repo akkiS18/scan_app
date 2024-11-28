@@ -6,8 +6,8 @@
 	</head>
 	<body style="background-color: black">
 		<h1 style="color: white">Code128 Scanner</h1>
-		<div id="scanner" style="display: flex; background-color: red"></div>
-		<p id="result"></p>
+		<p id="result" style="color: white; font-size: 30px"></p>
+		<div id="scanner" style="display: flex; background-color: silver"></div>
 
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/quagga/0.12.1/quagga.min.js"></script>
 		<script>
@@ -18,7 +18,7 @@
 						type: "LiveStream",
 						target: document.querySelector("#scanner"),
 						constraints: {
-							width: screen.availWidth,
+							width: screen.width,
 							height: 480,
 							facingMode: "environment",
 						},
