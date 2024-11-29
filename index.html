@@ -6,8 +6,8 @@
 		<style>
 			#reader {
 				width: 100%;
-				height: 100vh; /* Ekran to'liq to'ldiradi */
-				margin: 0;
+				height: 100vh;
+				display: none; /* Boshlanishida yashirilgan */
 			}
 			#result {
 				color: white;
@@ -21,30 +21,45 @@
 				background-color: black;
 				margin: 0;
 				overflow: hidden;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				justify-content: center;
+				height: 100vh;
+			}
+			#startButton {
+				padding: 15px 30px;
+				font-size: 20px;
+				cursor: pointer;
 			}
 		</style>
 	</head>
 	<body>
 		<div id="result"></div>
+		<button id="startButton">SCAN</button>
 		<div id="reader"></div>
 
 		<script src="https://unpkg.com/html5-qrcode/html5-qrcode.min.js"></script>
 		<script>
-			function onScanSuccess(decodedText, decodedResult) {
-				document.getElementById("result").innerText = `QR kod: ${decodedText}`;
-				html5QrcodeScanner.clear();
-			}
+			let html5QrcodeScanner;
 
-			function onScanFailure(error) {
-				console.log(error);
-			}
-
-			let html5QrcodeScanner = new Html5QrcodeScanner("reader", {
-				fps: 10,
-				qrbox: 800,
-				videoConstraints: { facingMode: "environment" },
+			document.getElementById("startButton").addEventListener("click", () => {
+				document.getElementById("startButton").style.display = "none"; // Tugmani yashirish
+				document.getElementById("reader").style.display = "block"; // Kamerani ko'rsatish
+				
+				html5QrcodeScanner = new Html5Qrcode("reader");
+				html5QrcodeScanner.start(
+					{ facingMode: "environment" }, // Orqa kamera
+					{ fps: 10, qrbox: 800 },
+					(decodedText) => {
+						document.getElementById("result").innerText = `QR kod: ${decodedText}`;
+						html5QrcodeScanner.stop(); // QR kod topilgach, skanerni to'xtatish
+					},
+					(error) => {
+						console.log(error); // Xatolarni ko'rsatish
+					}
+				);
 			});
-			html5QrcodeScanner.render(onScanSuccess, onScanFailure);
 		</script>
 	</body>
 </html>
