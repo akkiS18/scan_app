@@ -2,7 +2,8 @@
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0
+		user-scalable=no"" />
 		<title>Code128 Scanner</title>
 		<style>
 			body {
@@ -12,32 +13,27 @@
 				display: flex;
 				flex-direction: column;
 				align-items: center;
-				justify-content: center;
 				height: 100vh; /* To'liq ekran balandligi */
 			}
-			h1, p {
+			p {
 				color: white;
 				text-align: center;
 			}
 			#scanner {
-				width: 100%; /* Kengligi to'liq ekran */
-				height: 100vh; /* Balandligi to'liq ekran */
-				display: flex;
-				justify-content: center;
-				align-items: center;
+				width: 100%;
+				margin-top: 30px;
+			}
+			#scanner video {
+				width: 100%;
+				max-width: 640px;
 			}
 			#result {
-				position: absolute;
-				top: 10px; /* Natija ekranning yuqori qismida */
-				left: 50%;
-				transform: translateX(-50%);
 				font-size: 24px;
-				z-index: 10; /* Kameradan ustida ko'rsatiladi */
+				z-index: 10;
 			}
 		</style>
 	</head>
 	<body>
-		<h1>Code128 Scanner</h1>
 		<p id="result"></p>
 		<div id="scanner"></div>
 
@@ -49,13 +45,14 @@
 						type: "LiveStream",
 						target: document.querySelector("#scanner"),
 						constraints: {
-							width: window.innerWidth,
-							height: window.innerHeight,
-							facingMode: "environment", // Orqa kamera
+							width: { min: 640 },
+							height: { min: 480 },
+							facingMode: "environment",
+							aspectRatio: { min: 1, max: 2 },
 						},
 					},
 					decoder: {
-						readers: ["code_128_reader"], // Code128 format
+						readers: ["code_128_reader"],
 					},
 				},
 				function (err) {
@@ -68,8 +65,11 @@
 			);
 
 			Quagga.onDetected(function (data) {
-				document.getElementById("result").innerText = `Barkod: ${data.codeResult.code}`;
-				Quagga.stop(); // O'qish tugashi bilan to'xtaydi
+				document.getElementById(
+					"result"
+				).innerText = `Barkod: ${data.codeResult.code}`;
+				document.querySelector("#scanner").style.display = "none";
+				Quagga.stop();
 			});
 		</script>
 	</body>
