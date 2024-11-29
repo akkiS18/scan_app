@@ -6,36 +6,33 @@
 		<style>
 			#reader {
 				width: 100%;
-				max-width: 500px;
-				margin: auto;
+				height: 100vh; /* Ekran to'liq to'ldiradi */
+				margin: 0;
 			}
 			#result {
 				color: white;
 				font-size: 30px;
 				text-align: center;
-				margin-top: 20px;
+				position: absolute;
+				top: 20px;
+				width: 100%;
 			}
 			body {
 				background-color: black;
-				display: flex;
-				flex-direction: column;
-				align-items: center;
-				justify-content: center;
-				height: 100vh;
 				margin: 0;
+				overflow: hidden;
 			}
 		</style>
 	</head>
 	<body>
-		<h1 style="color: white">QR Code Scanner</h1>
+		<div id="result"></div>
 		<div id="reader"></div>
-		<p id="result"></p>
 
 		<script src="https://unpkg.com/html5-qrcode/html5-qrcode.min.js"></script>
-
 		<script>
 			function onScanSuccess(decodedText, decodedResult) {
 				document.getElementById("result").innerText = `QR kod: ${decodedText}`;
+				html5QrcodeScanner.clear();
 			}
 
 			function onScanFailure(error) {
@@ -44,7 +41,8 @@
 
 			let html5QrcodeScanner = new Html5QrcodeScanner("reader", {
 				fps: 10,
-				qrbox: 250,
+				qrbox: 300,
+				videoConstraints: { facingMode: "environment" },
 			});
 			html5QrcodeScanner.render(onScanSuccess, onScanFailure);
 		</script>
