@@ -32,7 +32,7 @@
 				font-size: 30px;
 				cursor: pointer;
 				border-radius: 10px;
-				background-color: #4caf50;
+				background-color: #e26922;
 				color: white;
 				border: none;
 			}
@@ -54,7 +54,7 @@
 				html5QrcodeScanner = new Html5Qrcode("reader");
 				html5QrcodeScanner.start(
 					{ facingMode: "environment" },
-					{ fps: 10, qrbox: 500 },
+					{ fps: 10, qrbox: 300 },
 					(decodedText) => {
 						document.getElementById(
 							"result"
