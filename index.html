@@ -31,7 +31,8 @@
 		<div id="reader"></div>
 		<p id="result"></p>
 
-		<script src="https://unpkg.com/html5-qrcode/minified/html5-qrcode.min.js"></script>
+		<script src="https://unpkg.com/html5-qrcode/html5-qrcode.min.js"></script>
+
 		<script>
 			function onScanSuccess(decodedText, decodedResult) {
 				document.getElementById("result").innerText = `QR kod: ${decodedText}`;
