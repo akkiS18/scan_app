@@ -5,9 +5,12 @@
 		<title>QR Code Scanner</title>
 		<style>
 			#reader {
-				width: 100%;
+				width: 100vw;
 				height: 100vh;
 				display: none;
+				max-width: 500px;
+				max-height: 500px;
+				margin: auto;
 			}
 			#result {
 				color: white;
@@ -54,7 +57,13 @@
 				html5QrcodeScanner = new Html5Qrcode("reader");
 				html5QrcodeScanner.start(
 					{ facingMode: "environment" },
-					{ fps: 10, qrbox: 300 },
+					{
+						fps: 10,
+						qrbox: {
+							width: window.innerWidth * 0.9,
+							height: window.innerWidth * 0.9,
+						},
+					},
 					(decodedText) => {
 						document.getElementById(
 							"result"
