@@ -2,76 +2,27 @@
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
-		<title>QR Code Scanner</title>
-		<style>
-			#reader {
-				width: 100vw;
-				height: 100vh;
-				display: none;
-				z-index: 10;
-			}
-			#reader video {
-				width: 100vw;
-				height: 100vh;
-			}
-			#result {
-				color: white;
-				font-size: 30px;
-				text-align: center;
-				position: absolute;
-				top: 20px;
-				width: 100%;
-			}
-			body {
-				margin: 0;
-				overflow: hidden;
-				display: flex;
-				flex-direction: column;
-				height: 100vh;
-				background-color: #000;
-			}
-			#startButton {
-				padding: 45px 90px;
-				font-size: 30px;
-				cursor: pointer;
-				border-radius: 10px;
-				background-color: #e26922;
-				color: white;
-				border: none;
-			}
-		</style>
+		<title>Cashback</title>
+		<link rel="stylesheet" href="style.css" />
 	</head>
 	<body>
-		<div id="result"></div>
-		<button id="startButton">SCAN CODE</button>
+		<h1>Cashback</h1>
+		<div id="main">
+			<button id="startButton">Kamerani yoqish</button>
+			<div id="second">
+				<div id="result">2222</div>
+				<input
+					type="number"
+					id="input"
+					min="0"
+					inputmode="numeric"
+					placeholder="0" />
+				<button id="submit">Tasdiqlash</button>
+			</div>
+		</div>
 		<div id="reader"></div>
 
 		<script src="https://unpkg.com/html5-qrcode/html5-qrcode.min.js"></script>
-		<script>
-			let html5QrcodeScanner;
-
-			document.getElementById("startButton").addEventListener("click", () => {
-				document.getElementById("startButton").style.display = "none";
-				document.getElementById("reader").style.display = "block";
-
-				html5QrcodeScanner = new Html5Qrcode("reader");
-				html5QrcodeScanner.start(
-					{ facingMode: "environment" },
-					{
-						fps: 10,
-						qrbox: 800,
-					},
-					(decodedText) => {
-						document.getElementById(
-							"result"
-						).innerText = `QR kod: ${decodedText}`;
-						html5QrcodeScanner.stop();
-					},
-					(error) => {
-						console.log(error);
-					}
-				);
-			});
-		</script>
+		<script src="script.js"></script>
 	</body>
 </html>
